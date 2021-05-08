@@ -3,6 +3,7 @@ Screen Copy GUI for android
 A yad GUI for scrcpy (https://github.com/Genymobile/scrcpy)
 
 Steps:
+
 1.Install screencopy (will install also yad, adb and scrcpy as dependencies).
 2.Enable USB debugging on Android device.
 3.Connect your android device with a usb cable.
