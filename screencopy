@@ -1,18 +1,21 @@
 #!/bin/bash
-tst=$(yad --center --top --borders=20 --width=300  --window-icon="/usr/share/pixmaps/icon16x16.png" --title "Screen Copy" --image="/usr/share/pixmaps/screencopy.png" --form --align="right" --field="IP" "192.168.1.1" --field="Bit Rate":CBE 1K!10K!^2M!5M --field="Max Size":CBE 600!800!^1080 --field="Enable TCP/IP":CHK FALSE)
+tst=$(yad --center --top --borders=20 --width=300  --window-icon="/usr/share/pixmaps/icon16x16.png" --title "Screen Copy" --image="/usr/share/pixmaps/screencopy.png" --form --align="right" --field="IP" "192.168.2.80" --field="Bit Rate":CBE 1K!10K!^2M!5M --field="Max Size":CBE 600!800!^1080 --field="Driver":CBE opengl!opengles!^opengles2!metal!software --field="Enable TCP/IP":CHK FALSE)
 one=$(echo $tst | awk -F '|' '{print $1}')
 two=$(echo $tst | awk -F '|' '{print $2}')
 three=$(echo $tst | awk -F '|' '{print $3}')
 four=$(echo $tst | awk -F '|' '{print $4}')
+five=$(echo $tst | awk -F '|' '{print $5}')
 if [ -z "$one" ]; then exit 0
 fi
 if [ ! -z "$two" ]; then br=" --bit-rate $two"
 fi
 if [ ! -z "$three" ]; then ms=" --max-size $three"
 fi
-if $four; then tcpip="adb tcpip 5555"
+dr=" --render-driver $four"
+if $five; then tcpip="adb tcpip 5555"
 fi
 adb connect $one:5555 &&
 $tcpip &&
-scrcpy$br$ms &&
+scrcpy$br$ms$dr &&
 adb kill-server
+
